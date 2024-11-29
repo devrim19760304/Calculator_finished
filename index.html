@@ -41,6 +41,9 @@
         name="resultoutput"
         readonly
       ></textarea>
+      <!--additionally we can add a button to clean result area-->
+
+      <button class="btn btn-secondary" id="clearresultbutton">Clear Result</button>
     </div>
     <script>
       //here comes our script
@@ -57,7 +60,12 @@
           console.log("you have pressed the button");
           //step 1 we get numbers input field
 
-          //first number get the input field for number 1
+          //but first we need to ne sure user enter valid values (numbers here)
+
+          //isNan = is not a number check if value is a number or not 
+
+          //first number get the input field for number 1 and convert it to floating number
+          // values are string we need to parce from text to float number
           let firstNumber = parseFloat(document.getElementById("firstnumberinput").value);
           //second number get the inoput field for number 2
           let secondNumber = parseFloat(document.getElementById("secondnumberinput").value);
@@ -71,6 +79,19 @@
 
           //let us see this operator in our console
           console.log(operator);
+
+          if (isNaN(firstNumber) || isNaN(secondNumber) ) {
+            alert("provide valid number")
+            //we also display it in our result box 
+            document.getElementById("resultoutput").value="Invalid Input";
+
+            //we must break and return not the execute next lines
+            return;
+
+
+          }
+
+          
 
 
           //we need also a defult result value we assign it as zero and everytime you make a new calculation if would reset
@@ -89,28 +110,48 @@
 
 
           if (operator==="1") {
-            let result=firstNumber+secondNumber;
-            console.log(result);
+             result=firstNumber+secondNumber;
+            
 
           } else if (operator==="2"){
             let result=firstNumber-secondNumber;
-            console.log(result);
+           
 
 
           } else if (operator==="3"){
             let result=firstNumber*secondNumber;
-            console.log(result);
+            
 
 
           } else if (operator==="4"){
-            let result=firstNumber/secondNumber;
-            console.log(result);
+            //second number cannot be zero
+            if (secondNumber===0) {
+              alert("Division cannot be zero");
+              document.getElementById("resultoutput").value="ERROR";
+              return;
+            }
+             result=firstNumber/secondNumber;
+            
+
+            //and anything else show a alert 
+          } else {
+            alert("Enter valid number(s)");
+
+          }
 
 
-          } 
+          //now we can also display result 
+          document.getElementById("resultoutput").value=result;
 
 
-          
+          //clean fields after press button with query selector 
+
+          document.querySelectorAll("input").forEach(x=> {
+            x.value="";
+          });
+
+
+
 
 
 
